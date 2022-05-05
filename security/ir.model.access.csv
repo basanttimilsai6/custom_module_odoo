@@ -1,0 +1,9 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_patient_patient_user,patient_patient,hospital_mgmt.model_patient_patient,account.group_account_user,1,0,0,0
+access_patient_patient_manager,patient_patient,hospital_mgmt.model_patient_patient,account.group_account_manager,1,1,1,1
+
+access_doctor_doctor_user,doctor_doctor,hospital_mgmt.model_doctor_doctor,account.group_account_user,1,0,0,0
+access_doctor_doctor_manager,doctor_doctor,hospital_mgmt.model_doctor_doctor,account.group_account_manager,1,1,1,1
+
+access_patient_emergency_contact_user,patient_emergency_contact,hospital_mgmt.model_patient_emergency_contact,account.group_account_user,1,0,0,0
+access_patient_emergency_contact_manager,patient_emergency_contact,hospital_mgmt.model_patient_emergency_contact,account.group_account_manager,1,1,1,1

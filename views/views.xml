@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Top Menu -->
+    <menuitem
+        id="hospital_mgmt_root"
+        name="Hospital Management"
+        sequence="10"/>
+
+    <!-- Patient Tree View -->
+    <record id="patient_view_tree" model="ir.ui.view">
+        <field name="name">patient.patient.tree</field>
+        <field name="model">patient.patient</field>
+        <field name="arch" type="xml">
+            <tree string="Patients">
+                <field name="name"/>
+                <field name="dob"/>
+                <field name="age"/>
+                <field name="gender"/>
+                <field name="phone"/>
+                <field name="current_address"/>
+                <field name="opd_date"/>
+                <field name="admit_date"/>
+                <field name="discharge_date"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Patient Form View -->
+    <record id="patient_view_form" model="ir.ui.view">
+        <field name="name">patient.patient.form</field>
+        <field name="model">patient.patient</field>
+        <field name="arch" type="xml">
+            <form string="Patients">
+                <header>
+                    <button type="object" name="admit_patient" 
+                        string="Admit" class="oe_highlight"
+                        attrs="{'invisible': [('state', 'not in', ('opd'))]}"
+                        />
+                    <button type="object" name="discharge_patient" string="Discharge"
+                        attrs="{'invisible': [('state', 'not in', ('admit'))]}"
+                        />
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <separator string="Personal Information"/>
+                            <field name="name"/>
+                            <field name="dob"/>
+                            <field name="age"/>
+                            <field name="gender"/>
+                            <field name="phone"/>
+                            <field name="email"/>
+                            <field name="permanent_address"/>
+                            <field name="current_address"/>
+                        </group>
+                        <group>
+                            <separator string="Other Information"/>
+                            <!-- <field name="state" invisible="1"/> -->
+                            <field name="opd_date"/>
+                            <field name="admit_date"  attrs="{'invisible': [('state', 'not in', ('admit', 'discharge'))]}"/>
+                            <field name="discharge_date" attrs="{'invisible': [('state', 'not in', ('discharge'))]}"/>
+                        </group>   
+                    </group>
+                    <group>
+                        <group>
+                            <separator string="Doctor Details" />
+                            <field name="doctor_ids" widget="many2many_tags"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page name="emergency_contact" string="Emergency Contacts">
+                            <field name="emergency_contact_ids" mode="tree">
+                                <tree editable="buttom">
+                                    <field name="name" />
+                                    <field name="phone" />
+                                    <field name="reln" />
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+
+    <!-- Doctor Tree View -->
+    <record id="doctor_view_tree" model="ir.ui.view">
+        <field name="name">doctor.doctor.tree</field>
+        <field name="model">doctor.doctor</field>
+        <field name="arch" type="xml">
+            <tree string="Doctors">
+                <field name="name"/>
+                <field name="dob"/>
+                <field name="phone"/>
+                <field name="specialization"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Doctor Form View -->
+    <record id="doctor_view_form" model="ir.ui.view">
+        <field name="name">doctor.doctor.form</field>
+        <field name="model">doctor.doctor</field>
+        <field name="arch" type="xml">
+            <form string="Doctors">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="dob"/>
+                        <field name="phone"/>
+                        <field name="specialization"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Patient action window -->
+    <record id="patient_action" model="ir.actions.act_window">
+        <field name="name">Patients</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">patient.patient</field>
+        <field name="view_mode">tree,form,kanban</field>
+    </record>
+
+    <!-- Doctor action window -->
+    <record id="doctor_action" model="ir.actions.act_window">
+        <field name="name">Doctors</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">doctor.doctor</field>
+        <field name="view_mode">tree,form,kanban</field>
+    </record>
+
+    <menuitem
+        id="patients_menu"
+        name="Patients"
+        parent="hospital_mgmt_root"
+        action="patient_action"
+        sequence="1"/>
+
+    <menuitem
+        id="doctor_menu"
+        name="Doctors"
+        parent="hospital_mgmt_root"
+        action="doctor_action"
+        sequence="2"/>
+
+</odoo>
